@@ -2,13 +2,14 @@
 
 Tools for building `hapi` apps.
 
-- [confStore](#confStore)
+- [confStore](#confstore)
 - [flatten](#flatten)
-- [lsWithoutIndex](#lsWithoutIndex)
-- [requireFiles](#requireFiles)
-- [requireNameMethod](#requireNameMethod)
-- [requireNameModule](#requireNameModule)
-- [requireAndFlatten](#requireAndFlatten)
+- [lsWithoutIndex](#lswithoutindex)
+- [requireFiles](#requirefiles)
+- [requireNameMethod](#requirenamemethod)
+- [requireNameModule](#requirenamemodule)
+- [requireAndFlatten](#requireandflatten)
+- [requireTestMirror](#requiretestmirror)
 
 # Usage
 
@@ -313,3 +314,54 @@ console.log(requireAndFlatten(__dirname));
 //     { path: '/messages/delete', /* ...etc */  },
 // ]
 ```
+
+---
+
+### `requireTestMirror`
+
+Requires a module or folder that is mirrored in a test folder.
+
+First argument is a file or path. This will resolve using `path` builtin.
+
+##### Usage
+
+``` js
+const myModule = requireTestMirror('' || file.js', '/my/tests/are/here');
+
+// Same as:
+// require('../../../../file.js')
+```
+
+Consider the follow tree:
+
+```
+config
+├── app.js
+├── plugins
+│   └── index.js
+└── server.js
+
+test
+└── config
+    ├── app.js
+    ├── plugins
+    │   └── index.js
+    └── server.js
+```
+
+
+##### `test/config/app.js`
+
+Running the following:
+
+``` js
+const AppConfig = requireTestMirror('app.js');
+```
+
+is the equivalent of doing:
+
+``` js
+const AppConfig = require('../../config/app.js');
+```
+
+The difference is, if you were to ever move `config/app.js` to `really/deep/nested/folder/app.js`, you would only need to move your `test/config/app.js` to `test/really/deep/nested/folder/app.js` and not have to worry about breaking the path traversal in your test.
