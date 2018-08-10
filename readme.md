@@ -321,12 +321,12 @@ console.log(requireAndFlatten(__dirname));
 
 Requires a module or folder that is mirrored in a test folder.
 
-First argument is a file or path. This will resolve using `path` builtin.
+First argument is the directory from which you're requiring, and the second argument is a filename or path. If your tests do not live in `/test`, you may optionally pass a 3rd paramater detailing where your tests exist relative to the first argument. This will resolve using `path` builtin.
 
 ##### Usage
 
 ``` js
-const myModule = requireTestMirror('' || file.js', '/my/tests/are/here');
+const myModule = requireTestMirror(__dirname, 'file.js', '/my/tests/are/here');
 
 // Same as:
 // require('../../../../file.js')
@@ -355,7 +355,7 @@ test
 Running the following:
 
 ``` js
-const AppConfig = requireTestMirror('app.js');
+const AppConfig = requireTestMirror(__dirname, 'app.js');
 ```
 
 is the equivalent of doing:
