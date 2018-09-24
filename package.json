@@ -1,6 +1,6 @@
 {
   "name": "hapi-utility-belt",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A series of utilities for building hapi apps",
   "main": "index.js",
   "scripts": {
@@ -19,5 +19,11 @@
   "license": "MIT",
   "dependencies": {
     "confidence": "^3.0.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/damusix/hapi-utility-belt"
+  },
+  "author": "Danilo Alonso",
+  "license": "MIT"
 }
