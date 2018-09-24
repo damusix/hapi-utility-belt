@@ -23,7 +23,5 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/damusix/hapi-utility-belt"
-  },
-  "author": "Danilo Alonso",
-  "license": "MIT"
+  }
 }
