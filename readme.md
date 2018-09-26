@@ -2,12 +2,11 @@
 
 Tools for building `hapi` apps.
 
-- [confStore](#confstore)
+- [confidant](#confidant)
 - [flatten](#flatten)
 - [lsWithoutIndex](#lswithoutindex)
 - [requireFiles](#requirefiles)
 - [requireNameMethod](#requirenamemethod)
-- [requireNameModule](#requirenamemodule)
 - [requireAndFlatten](#requireandflatten)
 - [requireTestMirror](#requiretestmirror)
 
@@ -42,7 +41,7 @@ module.exports = {
 
 ---
 
-### `confStore`
+### `confidant`
 
 Creates configuration object stores based on criteria. Uses `confidence` to load up configurations. Passes `env` criteria by default with loads `NODE_ENV`.
 
@@ -51,10 +50,11 @@ Creates configuration object stores based on criteria. Uses `confidence` to load
 Refer to [Hapi Confidence](https://github.com/hapijs/confidence) for details on what this accomplishes.
 
 
-
+Without Criteria
 ``` js
 // Create a new confugration object store
-const conf = new confStore({
+
+const myConfig = {
     $meta: "this is a sample conf",
     hasCache: {
         $filter: 'env',
@@ -62,7 +62,8 @@ const conf = new confStore({
         staging: false,
         $default: true
     }
-});
+}
+const conf = new confidant(myConfig);
 
 // Now you can use it
 console.log(conf.get('/hasCache'));
@@ -70,6 +71,37 @@ console.log(conf.get('/hasCache'));
 
 console.log(conf.meta('/'));
 // > "this is a sample conf"
+
+```
+
+With Criteria
+``` js
+// Create a new confugration object store
+
+const criteria = {
+    client: 'aaa'
+}
+
+const myConfig = {
+    $meta: "this is a sample conf",
+    hasCache: {
+        $filter: 'env',
+        development: false,
+        staging: false,
+        $default: true
+    },
+    showSlider: {
+        $filter: 'client',
+        aaa: true,
+        $default: false
+    }
+}
+
+const conf = new confidant(myConfig, criteria);
+
+// Now you can use it
+console.log(conf.get('/showSlider'));
+// > true
 
 ```
 
@@ -87,7 +119,7 @@ console.log(conf.meta('/'));
 This function alters the internal criteria using `Object.assign()`. You can override `criteria.env` if you'd like with this function.
 
 ``` js
-confStore.setCriteria({
+conf.setCriteria({
     buildNumber: process.env.BUILD_NUMBER
 });
 ```
@@ -101,6 +133,18 @@ Now criteria will be:
 }
 ```
 
+
+---
+
+### `deleteRecursive`
+
+Deletes files recursively
+
+##### Usage
+
+``` js
+deleteRecursive('./tmp');
+```
 
 ---
 
@@ -131,14 +175,15 @@ Consider the following tree:
 
 ```
 lib
-├── confStore.js
+├── confidant.js
+├── deleteRecursive.js
 ├── flatten.js
 ├── index.js
 ├── lsWithoutIndex.js
 ├── requireAndFlatten.js
 ├── requireFiles.js
 ├── requireNameMethod.js
-└── requireNameModule.js
+├── tryRequirePlugins.js
 ```
 
 `lsWithoutIndex` would render the following:
@@ -148,13 +193,14 @@ const fileList = lsWithoutIndex('./lib');
 console.log(fileList);
 
 // No 'index.js'
-// > [ 'confStore.js',
-//   'flatten.js',
-//   'lsWithoutIndex.js',
-//   'requireAndFlatten.js',
-//   'requireFiles.js',
-//   'requireNameMethod.js',
-//   'requireNameModule.js' ]
+// > [ 'confidant.js',
+//    'deleteRecursive.js',
+//    'flatten.js',
+//    'lsWithoutIndex.js',
+//    'requireAndFlatten.js',
+//    'requireFiles.js',
+//    'requireNameMethod.js',
+//    'tryRequirePlugins.js' ]
 ```
 
 
@@ -170,14 +216,15 @@ Consider the following tree:
 
 ```
 lib
-├── confStore.js
+├── confidant.js
+├── deleteRecursive.js
 ├── flatten.js
 ├── index.js
 ├── lsWithoutIndex.js
 ├── requireAndFlatten.js
 ├── requireFiles.js
 ├── requireNameMethod.js
-└── requireNameModule.js
+├── tryRequirePlugins.js
 ```
 
 `requireFiles` would render the following:
@@ -186,13 +233,14 @@ const dirModules = requireFiles('./lib');
 
 console.log(dirModules);
 
-// { confStore: [Function: Config],
-//   flatten: [Function: flatten],
+// { confidant: [Function: Config],
+//   deleteRecursive: [Function: flatten],
+//   flatten: [Function],
 //   lsWithoutIndex: [Function],
 //   requireAndFlatten: [Function],
 //   requireFiles: [Function],
 //   requireNameMethod: [Function],
-//   requireNameModule: [Function] }
+//   tryRequirePlugins: [Function] }
 ```
 
 ---
@@ -207,7 +255,7 @@ Consider the following tree:
 
 ```
 lib
-├── confStore.js
+├── confidant.js
 ├── flatten.js
 ├── index.js
 ├── lsWithoutIndex.js
@@ -223,52 +271,15 @@ const arr = requireFiles('./lib');
 
 console.log(arr);
 
-// [ { name: 'confStore', method: [Function: Config] },
-//   { name: 'flatten', method: [Function: flatten] },
+// [ { name: 'confidant', method: [Function: Config] },
+//   { name: 'deleteRecursive', method: [Function: flatten] },
+//   { name: 'flatten', method: [Function] },
 //   { name: 'lsWithoutIndex', method: [Function] },
 //   { name: 'requireAndFlatten', method: [Function] },
 //   { name: 'requireFiles', method: [Function] },
 //   { name: 'requireNameMethod', method: [Function] },
-//   { name: 'requireNameModule', method: [Function] } ]
+//   { name: 'tryRequirePlugins', method: [Function] } ]
 ```
-
----
-
-### `requireNameModule`
-
-This function uses `lsWithoutIndex` and `requireNameMethod`
-
-##### Usage
-
-Consider the following tree:
-
-```
-lib
-├── confStore.js
-├── flatten.js
-├── index.js
-├── lsWithoutIndex.js
-├── requireAndFlatten.js
-├── requireFiles.js
-├── requireNameMethod.js
-└── requireNameModule.js
-```
-
-`requireNameModule` would render the following:
-``` js
-const arr = requireNameModule('./lib');
-
-console.log(arr);
-
-// [ { name: 'confStore', module: [Function: Config] },
-//   { name: 'flatten', module: [Function: flatten] },
-//   { name: 'lsWithoutIndex', module: [Function] },
-//   { name: 'requireAndFlatten', module: [Function] },
-//   { name: 'requireFiles', module: [Function] },
-//   { name: 'requireNameMethod', module: [Function] },
-//   { name: 'requireNameModule', module: [Function] } ]
-```
-
 
 ---
 
@@ -317,16 +328,43 @@ console.log(requireAndFlatten(__dirname));
 
 ---
 
-### `requireTestMirror`
+### `tryRequirePlugins`
 
-Requires a module or folder that is mirrored in a test folder.
-
-First argument is the directory from which you're requiring, and the second argument is a filename or path. If your tests do not live in `/test`, you may optionally pass a 3rd paramater detailing where your tests exist relative to the first argument. This will resolve using `path` builtin.
+Wraps Hapi plugins module require in a try/catch. For use when requiring dev-only modules.
 
 ##### Usage
 
 ``` js
-const myModule = requireTestMirror(__dirname, 'file.js', '/my/tests/are/here');
+
+const server = Hapi.Server();
+
+server.register(tryRequirePlugins([
+
+    // These will fail in prodution
+    { plugin: 'tv', options: {} },
+    { plugin: 'blipp', options: {} },
+
+    // These will not fail in production
+    { plugin: 'inert', options: {} },
+    { plugin: 'vision', options: {} },
+]))
+```
+
+This way, running `npm install --production && npm start` will not throw an error.
+
+
+---
+
+### `requireTestMirror`
+
+Requires a module or folder that is mirrored in a test folder.
+
+First argument is the directory or filename you're requiring. If your tests do not live in `/test`, you may optionally pass a 2nd paramater detailing where your tests exist relative to the first argument. This will resolve using `path` builtin.
+
+##### Usage
+
+``` js
+const myModule = requireTestMirror(__filename, '/my/tests/are/here');
 
 // Same as:
 // require('../../../../file.js')
@@ -355,7 +393,7 @@ test
 Running the following:
 
 ``` js
-const AppConfig = requireTestMirror(__dirname, 'app.js');
+const AppConfig = requireTestMirror(__filename);
 ```
 
 is the equivalent of doing:
