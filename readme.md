@@ -3,12 +3,15 @@
 Tools for building `hapi` apps.
 
 - [confidant](#confidant)
+- [deleteRecursive](#deleterecursive)
+- [dirContents](#dircontents)
 - [flatten](#flatten)
 - [lsWithoutIndex](#lswithoutindex)
+- [requireAndFlatten](#requireandflatten)
 - [requireFiles](#requirefiles)
 - [requireNameMethod](#requirenamemethod)
-- [requireAndFlatten](#requireandflatten)
-- [requireTestMirror](#requiretestmirror)
+- [testMirrorPath](#testmirrorpath)
+- [tryRequirePlugins](#tryrequireplugins)
 
 # Usage
 
@@ -144,6 +147,53 @@ Deletes files recursively
 
 ``` js
 deleteRecursive('./tmp');
+```
+
+---
+
+### `dirContents`
+
+Retrieves contents of files in a directory recursively
+
+##### Usage
+
+``` js
+dirContents('./tmp');
+```
+
+Consider the following tree:
+
+```
+test/fixture
+├── flat
+│   └── index.js
+├── fldr
+│   └── index.js
+├── ignore.php
+├── ignore.py
+├── ignore.rb
+├── index.js
+├── tast.js
+├── test.js
+└── tist.js
+```
+
+`requireFiles` would render the following:
+``` js
+const fileContents = dirContents('./test/fixture');
+
+console.log(fileContents);
+
+// {
+//     'flat-index': '... file contents ...',
+//     'fldr-index': '... file contents ...',
+//     'ignore': '... file contents ...',
+//     'index': '... file contents ...',
+//     'tast': '... file contents ...',
+//     'test': '... file contents ...',
+//     'tist': '... file contents ...',
+// }
+
 ```
 
 ---
