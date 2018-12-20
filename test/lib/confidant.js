@@ -10,8 +10,6 @@ const Confidant = require('../../lib/confidant');
 const lab = exports.lab = Lab.script();
 const expect = Code.expect;
 
-const stub = {};
-
 
 lab.experiment('Confidant',  () => {
 

@@ -1,7 +1,6 @@
 // NPM Modules
 const Lab  = require('lab');
 const Code = require('code');
-const Confidence = require('confidence');
 
 // App Modules
 const RequireAndFlatten = require('../../lib/requireAndFlatten');
@@ -9,8 +8,6 @@ const RequireAndFlatten = require('../../lib/requireAndFlatten');
 // Module Variables
 const lab = exports.lab = Lab.script();
 const expect = Code.expect;
-
-const stub = {};
 
 
 lab.experiment('RequireAndFlatten',  () => {
@@ -30,7 +27,7 @@ lab.experiment('RequireAndFlatten',  () => {
             { name: 'fldr' },
             { name: 'test' },
             { name: 'tist' },
-            { name: 'tast' },
+            { name: 'tast' }
         ]);
     });
 });

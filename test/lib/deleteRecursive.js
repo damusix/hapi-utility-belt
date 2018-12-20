@@ -11,8 +11,6 @@ const DeleteRecursive = require('../../lib/deleteRecursive');
 const lab = exports.lab = Lab.script();
 const expect = Code.expect;
 
-const stub = {};
-
 const tmpfolder = __dirname + '/../../tmp';
 
 try {
@@ -57,7 +55,7 @@ lab.experiment('DeleteRecursive',  () => {
         catch (e) {
 
             expect(e).to.be.an.error();
-            expect(e.message).to.match(/no such file or directory/)
+            expect(e.message).to.match(/no such file or directory/);
         }
     });
 });

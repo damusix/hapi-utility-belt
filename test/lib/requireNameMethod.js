@@ -1,7 +1,6 @@
 // NPM Modules
 const Lab  = require('lab');
 const Code = require('code');
-const Confidence = require('confidence');
 
 // App Modules
 const RequireNameMethod = require('../../lib/requireNameMethod');
@@ -9,8 +8,6 @@ const RequireNameMethod = require('../../lib/requireNameMethod');
 // Module Variables
 const lab = exports.lab = Lab.script();
 const expect = Code.expect;
-
-const stub = {};
 
 
 lab.experiment('RequireNameMethod',  () => {

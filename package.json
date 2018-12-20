@@ -1,10 +1,10 @@
 {
   "name": "hapi-utility-belt",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "A series of utilities for building hapi apps",
   "main": "index.js",
   "scripts": {
-    "test": "lab"
+    "test": "lab -L -v"
   },
   "keywords": [
     "hapi",
@@ -17,13 +17,34 @@
   ],
   "author": "Danilo Alonso",
   "license": "MIT",
-  "dependencies": {
-    "code": "^5.2.0",
-    "confidence": "^3.0.2",
-    "lab": "^16.1.0"
+  "devDependencies": {
+    "code": "^5.2.4",
+    "lab": "^18.0.1"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/damusix/hapi-utility-belt"
+  },
+  "dependencies": {
+    "confidence": "^4.0.1"
+  },
+
+  "eslintConfig": {
+      "extends": "hapi",
+      "parserOptions": {
+          "ecmaVersion": 2017,
+          "sourceType": "module",
+          "ecmaFeatures": {
+              "jsx": true
+          }
+      },
+      "rules": {
+          "arrow-body-style": [
+              "error",
+              "as-needed"
+          ],
+          "hapi/hapi-scope-start": "error",
+          "hapi/hapi-capitalize-modules": "error"
+      }
   }
 }

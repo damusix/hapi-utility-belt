@@ -10,9 +10,6 @@ const Index = require('..');
 const lab = exports.lab = Lab.script();
 const expect = Code.expect;
 
-const stub = {};
-
-
 lab.experiment('Index File',  () => {
 
     lab.test('it should contain keys of files in /lib', () => {

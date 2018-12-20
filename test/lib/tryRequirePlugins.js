@@ -10,8 +10,6 @@ const TryRequirePlugins = require('../../lib/tryRequirePlugins');
 const lab = exports.lab = Lab.script();
 const expect = Code.expect;
 
-const stub = {};
-
 
 lab.experiment('TryRequirePlugins',  () => {
 
@@ -25,7 +23,7 @@ lab.experiment('TryRequirePlugins',  () => {
         const plugins = TryRequirePlugins([
             { plugin: 'code', options: {} },
             { plugin: 'blipp', options: {} },
-            { plugin: 'confidence', options: {} },
+            { plugin: 'confidence', options: {} }
         ]);
 
         expect(plugins.length).to.equal(2);
