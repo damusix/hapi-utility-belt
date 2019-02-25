@@ -26,6 +26,7 @@ lab.experiment('DirContents',  () => {
         expect(items.test).to.equal('module.exports = { name: \'test\' };\n');
         expect(items.tist).to.equal('module.exports = { name: \'tist\' };\n');
 
-        expect(items).to.include(['flat-index', 'fldr-index']);
+        expect(items).to.include(['flat-index', 'fldr-index', 'fldr-fldrer-fldrerest-goal']);
+        expect(items['fldr-fldrer-fldrerest-goal']).to.equal('<h1>success!</h1>');
     });
 });
