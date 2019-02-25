@@ -1,6 +1,6 @@
 {
   "name": "hapi-utility-belt",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "A series of utilities for building hapi apps",
   "main": "index.js",
   "scripts": {
@@ -28,23 +28,22 @@
   "dependencies": {
     "confidence": "^4.0.1"
   },
-
   "eslintConfig": {
-      "extends": "hapi",
-      "parserOptions": {
-          "ecmaVersion": 2017,
-          "sourceType": "module",
-          "ecmaFeatures": {
-              "jsx": true
-          }
-      },
-      "rules": {
-          "arrow-body-style": [
-              "error",
-              "as-needed"
-          ],
-          "hapi/hapi-scope-start": "error",
-          "hapi/hapi-capitalize-modules": "error"
+    "extends": "hapi",
+    "parserOptions": {
+      "ecmaVersion": 2017,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
       }
+    },
+    "rules": {
+      "arrow-body-style": [
+        "error",
+        "as-needed"
+      ],
+      "hapi/hapi-scope-start": "error",
+      "hapi/hapi-capitalize-modules": "error"
+    }
   }
 }
